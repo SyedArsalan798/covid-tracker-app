@@ -18,6 +18,7 @@ The COVID-19 Tracker is a web application built with Flask that allows doctors a
 - Create a virtual environment: `python -m venv venv`
 - Activate the virtual environment: `source venv/bin/activate` (for Linux/Mac) or `venv\Scripts\activate` (for Windows)
 - Install the required dependencies: `pip install -r requirements.txt`
+- Already Trained Model: [CNN_Covid19_Xray_V1.h5](https://drive.google.com/file/d/1GIz1F3G4p2sxWYFR8TYqSTNpl25NnX6Y/view?usp=sharing)
 - Run the Flask application: `flask run`
 
 # Usage
