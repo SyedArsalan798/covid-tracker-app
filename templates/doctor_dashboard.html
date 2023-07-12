@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <link rel="shortcut icon" href="/static/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<header class="header" data-header style="position: static;">
+    <div class="container">
+      <nav class="navbar navbar-expand-md navbar-dark" style="background-color: hsl(213, 81%, 25%);">
+        <a href="{{ url_for('doctor_dashboard') }}" class="navbar-brand">
+            <img src="/static/images/logo.svg" width="199" height="50" alt="Covid-19 home">
+          </a>
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon rounded-0"></span>
+            </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+              <ul class="navbar-nav mt-2 mt-lg-0 ms-auto">
+                  <li class="nav-item" style="font-size: large;">
+                      <a class="nav-link active" href="{{ url_for('doctor_dashboard') }}" aria-current="page">Dashboard <span class="visually-hidden">(current)</span></a>
+                  </li>
+                  <li class="nav-item" style="font-size: large;">
+                      <a class="nav-link" href="{{ url_for('doctorLogout') }}">Logout <i class="bi bi-box-arrow-right"></i></a>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+
+    </div>
+  </header>
+<body style="background-color: hsl(213, 81%, 25%); font-family: 'Roboto', sans-serif;" id="top">
+<main>
+    {% if flag == 1 and img_id %}
+        <p class="bg-success text-center p-3 text-white">The Results are Generated and Forwarded to the patient, {{ xray_imagesWithResults[img_id-1][3] }}</p>
+    {% endif %}
+    <div class="container">
+        <h2 class="text-white text-center mt-3">Doctor Dashboard</h2>
+        {% if xray_imagesWithResults != [] %}
+        <div class="row">
+            {% for xray_image in xray_imagesWithResults %}
+                <div class="col-md-5">
+                    <div class="card mb-4 rounded-0 border-0" style="background-color: hsl(210, 100%, 20%);">
+                        <div class="card-header border-0 mb-0">
+                            <center>
+                            <small class="card-title text-white ms-2">Uploaded on : {{ xray_image[2] }}</small>
+                            </center>
+                            <h5 class="card-title p-2 mb-0" style="color: rgb(201, 222, 240);">Patient Name: {{ xray_image[3] }} {{ xray_image[4] }} <br>
+                                <small class="mt-0" style="font-weight: 400;">Patient ID: {{ xray_image[5] }}</small>
+                            </h5>
+                        </div>
+                        <div class="card-body mt-0 pt-0">
+                            <img src="/static/images/xrays/{{ xray_image[1] }}" class="card-img-top img-fluid mb-3" alt="X-Ray Image">
+                            <a href="/doctor/dashboard/1/{{ xray_image[0] }}/{{ xray_image[5] }}" class="btn btn-transparent rounded-0 border p-3 text-white w-100" style="font-size: large;" title="You will see respective patient Results and those Results would automatically be forwarded to the Patient.">Generate and Forward Results</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="card mb-4 rounded-0 border-0" style="background-color: hsl(210, 100%, 20%);">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color: rgb(201, 222, 240);">Results</h4>
+                            {% if xray_image[6] is none %}
+                                <p class="text-white">Please Click on 'Generate and Forward Results' button to see Patient's Results.</p>
+                            {% else %}
+                                {% if xray_image[6] == 'COVID-19' %}
+                                    <h6 class="fs-5" style="color: hsl(0, 100%, 68%);">The Patient is affected with COVID-19.</h6>
+                                {% else %}
+                                    <h6 class="fs-5" style="color: #00ff99;">The Patient is Normal.</h6>
+                                {% endif %}
+                                <p class="mb-1 text-white" style="font-weight: 500;" title="Probability Distribution denotes the chances that patient has either covid or is Normal.">Probability Distribution:</p>
+                                <ul>
+                                    <li class="text-white mb-0"><b>COVID-19 :</b> {{ xray_image[7] }}</li>
+                                    <li class="text-white mb-0"><b>Normal :</b> {{ xray_image[8] }}</li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p class="text-white text-center">There is nothing to see in the dashboard, once patient submits request, then it'll be shown here.</p>
+        {% endif %}
+    </div>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Patient Dashboard{% endblock title %}
+{% block body %}
+
+<div class="upload-container">
+    <form class="upload-form" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="image" class="form-label">Please choose X-Ray image of chest:</label>
+            <input type="file" class="form-control" id="image" name="image" accept=".png" required>
+            <small class="text-muted">File should be in .png format.</small>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary rounded-0 px-5 py-2">Upload</button>
+        </div>
+    </form>
+</div>
+    
+{% endblock body %}

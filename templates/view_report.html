@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}View Reports{% endblock title %}
+{% block body %}
+
+    <h2 class="text-center text-white">View Reports</h2>
+    {% if reports %}
+    <p class="text-white text-center">{{ message }}</p>
+        <div class="container">
+            <div class="row">
+                {% for report in reports %}
+                    <div class="col-12 mb-4">
+                        <div class="card border-0 rounded-0" style="background-color: hsl(210, 100%, 20%);">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="/static/images/xrays/{{ report.xray_image[2] }}" class="img-fluid w-100 h-100" alt="X-Ray Image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        {% if report.result[3] == 'COVID-19' %}
+                                        <h5 class="card-title" style="color: rgb(201, 222, 240);">Result : <span style="color: hsl(0, 100%, 68%);">{{ report.result[3] }} Detected</span></h5>
+                                        <p class="card-text mb-0 text-white"><b>Covid Probability :</b> {{ report.result[4] }}</p>
+                                        <p class="card-text text-white"><b>Normal Probability :</b> {{ report.result[5] }}</p>
+                                            <h5 class="card-subtitle mb-2" style="color: rgb(201, 222, 240);">What to do:</h5>
+                                            <ul class="card-text text-white">
+                                                <li>Your X-ray has shown signs of COVID-19 infection.</li>
+                                                <li>It is crucial to follow the recommended guidelines provided by your healthcare provider.</li>
+                                                <li>Isolate yourself and avoid contact with others to prevent the spread of the virus.</li>
+                                                <li>Contact your healthcare provider for further instructions and guidance.
+                                                </li>
+                                            </ul>
+                                        {% else %}
+                                        <h5 class="card-title" style="color: rgb(201, 222, 240);">Result : <span style="color: #00ff99;">{{ report.result[3] }}</span></h5>
+                                        <p class="card-text mb-0 text-white"><b>Covid Probability :</b> {{ report.result[4] }}</p>
+                                        <p class="card-text text-white"><b>Normal Probability :</b> {{ report.result[5] }}</p>
+                                        
+                                        <h5 class="card-subtitle mb-2" style="color: rgb(201, 222, 240);">What to do:</h5>
+                                        <ul class="text-white card-text">
+                                            <li>You have received a normal result for your X-ray.</li>
+                                            <li>No signs of COVID-19 were detected.</li>
+                                            <li>Please continue to follow general health guidelines to stay healthy.</li>
+                                            <li>If you experience any symptoms or have concerns, consult with your healthcare provider.</li>
+                                        </ul>
+
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-white text-center">{{ message }}</p>
+    {% endif %}
+
+    {% endblock body %}
+
